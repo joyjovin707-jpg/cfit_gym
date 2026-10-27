@@ -1,0 +1,359 @@
+{
+  "version": "2.0.0",
+  "updatedAt": "2026-10-27T13:47:09.088Z",
+  "members": [
+    {
+      "id": 3286,
+      "member_id": "GYM-0101",
+      "full_name": "neeraj",
+      "plan_type": "Gold",
+      "trainer_id": 1,
+      "join_date": "2025-11-15",
+      "expiry_date": "2026-11-15",
+      "status": "Active",
+      "trainer_name": "Vikram Sethi"
+    },
+    {
+      "id": 3287,
+      "member_id": "GYM-0102",
+      "full_name": "abin",
+      "plan_type": "Platinum",
+      "trainer_id": 2,
+      "join_date": "2026-01-10",
+      "expiry_date": "2027-01-10",
+      "status": "Active"
+    },
+    {
+      "id": 3288,
+      "member_id": "GYM-0103",
+      "full_name": "sadi",
+      "plan_type": "Silver",
+      "trainer_id": 3,
+      "join_date": "2026-03-01",
+      "expiry_date": "2026-09-01",
+      "status": "Active"
+    },
+    {
+      "id": 3289,
+      "member_id": "GYM-0104",
+      "full_name": "vinod",
+      "plan_type": "Gold",
+      "trainer_id": 1,
+      "join_date": "2025-12-05",
+      "expiry_date": "2026-12-05",
+      "status": "Active"
+    },
+    {
+      "id": 3290,
+      "member_id": "GYM-0105",
+      "full_name": "farzan",
+      "plan_type": "Platinum",
+      "trainer_id": 2,
+      "join_date": "2026-04-12",
+      "expiry_date": "2027-04-12",
+      "status": "Active"
+    },
+    {
+      "id": 3291,
+      "member_id": "GYM-TEST",
+      "full_name": "Test User",
+      "plan_type": "Gold",
+      "trainer_id": 1,
+      "trainer_name": "Vikram Sethi",
+      "join_date": "2026-10-26",
+      "expiry_date": "2027-10-26",
+      "status": "Active"
+    }
+  ],
+  "staff_users": [
+    {
+      "id": 2135,
+      "username": "admin",
+      "password": "admin123",
+      "full_name": "JOVIN",
+      "role": "Admin",
+      "email": "jovin.admin@cfitgym.com",
+      "phone": "+91 98470 11001",
+      "shift": "All Shifts",
+      "status": "Active",
+      "can_manage_members": 1,
+      "can_process_payments": 1,
+      "can_manage_classes": 1,
+      "can_manage_trainers": 1,
+      "created_at": "2026-10-26 16:04:51"
+    },
+    {
+      "id": 2136,
+      "username": "staff",
+      "password": "staff123",
+      "full_name": "staff",
+      "role": "Staff",
+      "email": "staff@cfitgym.com",
+      "phone": "+91 98470 22002",
+      "shift": "Morning",
+      "status": "Active",
+      "can_manage_members": 1,
+      "can_process_payments": 1,
+      "can_manage_classes": 1,
+      "can_manage_trainers": 1,
+      "created_at": "2026-10-26 16:04:51"
+    },
+    {
+      "id": 2137,
+      "username": "adhil",
+      "password": "adhil123",
+      "full_name": "adhil",
+      "role": "Staff",
+      "email": "adhil@cfitgym.com",
+      "phone": "+91 98470 33003",
+      "shift": "Morning",
+      "status": "Active",
+      "can_manage_members": 1,
+      "can_process_payments": 1,
+      "can_manage_classes": 1,
+      "can_manage_trainers": 1,
+      "created_at": "2026-10-26 16:04:51"
+    },
+    {
+      "id": 2138,
+      "username": "dnv",
+      "password": "dnv123",
+      "full_name": "DNV",
+      "role": "Staff",
+      "email": "dnv@cfitgym.com",
+      "phone": "+91 98470 44004",
+      "shift": "Evening",
+      "status": "Active",
+      "can_manage_members": 1,
+      "can_process_payments": 1,
+      "can_manage_classes": 1,
+      "can_manage_trainers": 1,
+      "created_at": "2026-10-26 16:04:51"
+    },
+    {
+      "id": 2139,
+      "username": "balu",
+      "password": "balu123",
+      "full_name": "balu",
+      "role": "Staff",
+      "email": "balu@cfitgym.com",
+      "phone": "+91 98470 55005",
+      "shift": "Evening",
+      "status": "Active",
+      "can_manage_members": 1,
+      "can_process_payments": 1,
+      "can_manage_classes": 1,
+      "can_manage_trainers": 1,
+      "created_at": "2026-10-26 16:04:51"
+    },
+    {
+      "id": 2140,
+      "username": "abhiram",
+      "password": "abhiram123",
+      "full_name": "abhiram",
+      "role": "Staff",
+      "email": "abhiram@cfitgym.com",
+      "phone": "+91 98470 66006",
+      "shift": "Night",
+      "status": "Active",
+      "can_manage_members": 1,
+      "can_process_payments": 1,
+      "can_manage_classes": 1,
+      "can_manage_trainers": 1,
+      "created_at": "2026-10-26 16:04:51"
+    }
+  ],
+  "trainers": [
+    {
+      "id": 1,
+      "trainer_code": "TR-01",
+      "full_name": "Vikram Sethi",
+      "specialty": "Strength & Conditioning",
+      "rating": 4.9
+    },
+    {
+      "id": 2,
+      "trainer_code": "TR-02",
+      "full_name": "Sneha Pillai",
+      "specialty": "HIIT & Functional",
+      "rating": 4.8
+    },
+    {
+      "id": 3,
+      "trainer_code": "TR-03",
+      "full_name": "Anand Jacob",
+      "specialty": "Powerlifting & Mobility",
+      "rating": 4.7
+    },
+    {
+      "id": 4,
+      "trainer_code": "TR-04",
+      "full_name": "Meera Varma",
+      "specialty": "Yoga & Flexibility",
+      "rating": 4.9
+    }
+  ],
+  "attendance": [
+    {
+      "id": 1,
+      "member_id": "GYM-0101",
+      "check_in_time": "2026-10-19 06:15:00",
+      "check_out_time": "2026-10-19 07:30:00",
+      "check_in_method": "Reception Desk"
+    },
+    {
+      "id": 2,
+      "member_id": "GYM-0102",
+      "check_in_time": "2026-10-19 07:05:00",
+      "check_out_time": "2026-10-26 21:34:48",
+      "check_in_method": "Reception Desk"
+    },
+    {
+      "id": 3,
+      "member_id": "GYM-0103",
+      "check_in_time": "2026-10-18 17:30:00",
+      "check_out_time": "2026-10-18 18:45:00",
+      "check_in_method": "Reception Desk"
+    },
+    {
+      "id": 4,
+      "member_id": "GYM-0104",
+      "check_in_time": "2026-10-19 08:15:00",
+      "check_out_time": "2026-10-19 09:20:00",
+      "check_in_method": "Reception Desk"
+    },
+    {
+      "id": 5,
+      "member_id": "GYM-0105",
+      "check_in_time": "2026-10-19 09:00:00",
+      "check_out_time": "2026-10-26 21:35:15",
+      "check_in_method": "Reception Desk"
+    }
+  ],
+  "payments": [
+    {
+      "id": 1,
+      "member_id": "GYM-0101",
+      "plan_description": "Gold — monthly",
+      "amount": 2500,
+      "due_date": "2026-10-15",
+      "payment_status": "Paid"
+    },
+    {
+      "id": 2,
+      "member_id": "GYM-0102",
+      "plan_description": "Platinum — annual",
+      "amount": 28000,
+      "due_date": "2026-10-01",
+      "payment_status": "Paid"
+    },
+    {
+      "id": 3,
+      "member_id": "GYM-0103",
+      "plan_description": "Silver — monthly",
+      "amount": 1800,
+      "due_date": "2026-10-10",
+      "payment_status": "Paid"
+    },
+    {
+      "id": 4,
+      "member_id": "GYM-0104",
+      "plan_description": "Gold — 6 month",
+      "amount": 14000,
+      "due_date": "2026-10-25",
+      "payment_status": "Paid"
+    },
+    {
+      "id": 5,
+      "member_id": "GYM-0105",
+      "plan_description": "Platinum — monthly",
+      "amount": 3500,
+      "due_date": "2026-10-24",
+      "payment_status": "Pending"
+    }
+  ],
+  "classes": [
+    {
+      "id": 1,
+      "class_name": "CrossFit Power Hour",
+      "trainer_id": 1,
+      "studio_location": "Studio A (Ground)",
+      "start_time": "06:30 AM",
+      "max_capacity": 15,
+      "booked_count": 1
+    },
+    {
+      "id": 2,
+      "class_name": "HIIT Conditioning Blitz",
+      "trainer_id": 2,
+      "studio_location": "Studio B (Level 1)",
+      "start_time": "07:30 AM",
+      "max_capacity": 20,
+      "booked_count": 1
+    },
+    {
+      "id": 3,
+      "class_name": "Power Yoga Flow",
+      "trainer_id": 4,
+      "studio_location": "Studio C (Level 2)",
+      "start_time": "08:30 AM",
+      "max_capacity": 12,
+      "booked_count": 1
+    },
+    {
+      "id": 4,
+      "class_name": "Strength & Hypertrophy",
+      "trainer_id": 3,
+      "studio_location": "Studio A (Ground)",
+      "start_time": "05:30 PM",
+      "max_capacity": 15,
+      "booked_count": 1
+    },
+    {
+      "id": 5,
+      "class_name": "Spin & Cardio Blast",
+      "trainer_id": 2,
+      "studio_location": "Studio B (Level 1)",
+      "start_time": "06:30 PM",
+      "max_capacity": 18,
+      "booked_count": 1
+    }
+  ],
+  "class_bookings": [
+    {
+      "id": 1,
+      "class_id": 1,
+      "member_id": "GYM-0101",
+      "member_name": "neeraj",
+      "booked_at": "2026-10-18 10:00:00"
+    },
+    {
+      "id": 2,
+      "class_id": 2,
+      "member_id": "GYM-0102",
+      "member_name": "abin",
+      "booked_at": "2026-10-18 11:00:00"
+    },
+    {
+      "id": 3,
+      "class_id": 3,
+      "member_id": "GYM-0103",
+      "member_name": "sadi",
+      "booked_at": "2026-10-18 14:00:00"
+    },
+    {
+      "id": 4,
+      "class_id": 4,
+      "member_id": "GYM-0104",
+      "member_name": "vinod",
+      "booked_at": "2026-10-19 08:00:00"
+    },
+    {
+      "id": 5,
+      "class_id": 5,
+      "member_id": "GYM-0105",
+      "member_name": "farzan",
+      "booked_at": "2026-10-19 08:30:00"
+    }
+  ]
+}
