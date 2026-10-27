@@ -41,8 +41,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'staff_control', label: 'Staff Control', icon: Users, badge: 'ADMIN' },
   ];
 
+  const isAbhiram = currentUser?.username?.toLowerCase() === 'abhiram';
+
   const systemNav = [
-    { id: 'mysql', label: 'MySQL & JDBC' },
+    ...(isAbhiram ? [{ id: 'mysql', label: 'MySQL & JDBC' }] : []),
     { id: 'settings', label: 'Settings' },
   ];
 

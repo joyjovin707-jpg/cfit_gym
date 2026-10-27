@@ -3,7 +3,6 @@
  * Converts TypeScript / SQLite data structures to real MySQL database tables
  * and provides live JDBC connection strings, credentials, diagnostics, and sync.
  */
-import mysql from 'mysql2/promise';
 import fs from 'fs';
 import path from 'path';
 
@@ -37,6 +36,19 @@ export function updateMySQLConfig(config: Partial<MySQLConfig>): MySQLConfig {
     port: Number(config.port) || activeMySQLConfig.port,
   };
   return activeMySQLConfig;
+}
+
+/**
+ * Safely resolves mysql2/promise client dynamically to prevent dev server crashes
+ */
+async function getMySQLClient(): Promise<any> {
+  try {
+    const mod = await import('mysql2/promise');
+    return mod.default || mod;
+  } catch (err) {
+    console.warn('[MYSQL] mysql2/promise could not be loaded dynamically:', err);
+    return null;
+  }
 }
 
 /**
@@ -79,6 +91,21 @@ try (PreparedStatement ps = conn.prepareStatement(sql);
  * Tests live connection to MySQL server
  */
 export async function testMySQLConnection(config: MySQLConfig = activeMySQLConfig) {
+  const mysql = await getMySQLClient();
+  if (!mysql) {
+    return {
+      connected: false,
+      error: 'mysql2 module is not initialized in the Node runtime.',
+      host: config.host,
+      port: config.port,
+      jdbcUrl: getJDBCConnectionInfo(config).jdbcUrl,
+      troubleshooting: [
+        'Ensure dependencies are installed: npm install mysql2',
+        'You can also run schema_mysql.sql directly in phpMyAdmin, XAMPP, or MySQL CLI.',
+      ],
+    };
+  }
+
   try {
     const connection = await mysql.createConnection({
       host: config.host,
@@ -160,6 +187,14 @@ function getTroubleshootingTips(err: any, config: MySQLConfig) {
  * Reads the schema_mysql.sql file and executes it on MySQL
  */
 export async function initializeMySQLDatabase(config: MySQLConfig = activeMySQLConfig) {
+  const mysql = await getMySQLClient();
+  if (!mysql) {
+    return {
+      success: false,
+      error: 'mysql2 module unavailable. Download schema_mysql.sql to run directly in MySQL.',
+    };
+  }
+
   try {
     const connection = await mysql.createConnection({
       host: config.host,
@@ -205,6 +240,11 @@ export async function initializeMySQLDatabase(config: MySQLConfig = activeMySQLC
  * Syncs in-memory data to MySQL tables
  */
 export async function syncDataToMySQL(data: any, config: MySQLConfig = activeMySQLConfig) {
+  const mysql = await getMySQLClient();
+  if (!mysql) {
+    return { success: false, error: 'mysql2 module unavailable' };
+  }
+
   try {
     const connection = await mysql.createConnection({
       host: config.host,

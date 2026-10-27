@@ -524,6 +524,7 @@ export function App() {
           {currentScreen === 'payments' && (
             <PaymentsScreen
               payments={payments}
+              members={members}
               collectedMtd={paymentTotals.collectedMtd}
               pendingDues={paymentTotals.pendingDues}
               overdueCount={paymentTotals.overdueCount}
@@ -573,7 +574,27 @@ export function App() {
           )}
 
           {currentScreen === 'mysql' && (
-            <MySQLScreen onNotify={notify} />
+            currentUser.username?.toLowerCase() === 'abhiram' ? (
+              <MySQLScreen onNotify={notify} />
+            ) : (
+              <div className="bg-[#1A1D21] border border-[#2C3034] rounded-xl p-8 text-center max-w-md mx-auto my-12 space-y-4">
+                <div className="w-12 h-12 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center mx-auto text-xl font-bold font-mono">
+                  !
+                </div>
+                <div>
+                  <h3 className="font-bold text-base text-[#EDEEEA]">Access Restricted</h3>
+                  <p className="text-xs text-[#9A9E9F] mt-1">
+                    The MySQL & JDBC management hub is exclusively accessible for staff user <strong>abhiram</strong>.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setCurrentScreen('dashboard')}
+                  className="px-4 py-2 bg-[#212528] text-[#EDEEEA] rounded-lg text-xs font-semibold hover:bg-[#2C3034] cursor-pointer"
+                >
+                  Return to Dashboard
+                </button>
+              </div>
+            )
           )}
 
           {currentScreen === 'settings' && (

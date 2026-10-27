@@ -112,6 +112,14 @@ function loadInitialDb() {
       { id: 3, class_name: 'Power Yoga Flow', trainer_id: 4, trainer_name: 'Meera Varma', studio_location: 'Studio C (Level 2)', start_time: '08:30 AM', max_capacity: 12, booked_count: 1 },
       { id: 4, class_name: 'Strength & Hypertrophy', trainer_id: 3, trainer_name: 'Anand Jacob', studio_location: 'Studio A (Ground)', start_time: '05:30 PM', max_capacity: 15, booked_count: 1 },
       { id: 5, class_name: 'Spin & Cardio Blast', trainer_id: 2, trainer_name: 'Sneha Pillai', studio_location: 'Studio B (Level 1)', start_time: '06:30 PM', max_capacity: 18, booked_count: 1 }
+    ],
+    class_bookings: [
+      { id: 1, class_id: 1, member_id: 'GYM-0101', member_name: 'neeraj', booked_at: '2026-10-26 19:00:00' },
+      { id: 2, class_id: 2, member_id: 'GYM-0102', member_name: 'abin', booked_at: '2026-10-26 19:15:00' },
+      { id: 3, class_id: 2, member_id: 'GYM-0103', member_name: 'sadi', booked_at: '2026-10-26 19:30:00' },
+      { id: 4, class_id: 3, member_id: 'GYM-0104', member_name: 'vinod', booked_at: '2026-10-26 20:00:00' },
+      { id: 5, class_id: 4, member_id: 'GYM-0105', member_name: 'farzan', booked_at: '2026-10-26 20:30:00' },
+      { id: 6, class_id: 5, member_id: 'GYM-0101', member_name: 'neeraj', booked_at: '2026-10-26 21:00:00' }
     ]
   };
 
@@ -281,6 +289,15 @@ async function startServer() {
       if (Array.isArray(incoming.attendance)) dbMemory.attendance = incoming.attendance;
       if (Array.isArray(incoming.payments)) dbMemory.payments = incoming.payments;
       if (Array.isArray(incoming.classes)) dbMemory.classes = incoming.classes;
+      if (Array.isArray(incoming.class_bookings)) {
+        dbMemory.class_bookings = incoming.class_bookings;
+        if (Array.isArray(dbMemory.classes)) {
+          dbMemory.classes = dbMemory.classes.map((c: any) => ({
+            ...c,
+            booked_count: dbMemory.class_bookings.filter((b: any) => Number(b.class_id) === Number(c.id)).length,
+          }));
+        }
+      }
 
       saveDb();
       res.json({ success: true, message: 'Central database updated and synced across all devices.', updatedAt: dbMemory.updatedAt });
@@ -426,6 +443,81 @@ async function startServer() {
     dbMemory.attendance.unshift({ id: newId, ...a });
     saveDb();
     res.json({ success: true, record: dbMemory.attendance[0] });
+  });
+
+  // Classes and Class Booking endpoints
+  app.get('/api/classes', (req, res) => {
+    const list = (dbMemory.classes || []).map((c: any) => {
+      const bookings = (dbMemory.class_bookings || []).filter((b: any) => Number(b.class_id) === Number(c.id));
+      return {
+        ...c,
+        booked_count: bookings.length,
+        bookings,
+      };
+    });
+    res.json(list);
+  });
+
+  app.post('/api/classes/:id/bookings', (req, res) => {
+    const classId = Number(req.params.id);
+    const { member_id } = req.body || {};
+    if (!member_id) {
+      return res.status(400).json({ success: false, message: 'member_id is required' });
+    }
+
+    if (!Array.isArray(dbMemory.classes)) dbMemory.classes = [];
+    if (!Array.isArray(dbMemory.class_bookings)) dbMemory.class_bookings = [];
+
+    const gymClass = dbMemory.classes.find((c: any) => Number(c.id) === classId);
+    if (!gymClass) {
+      return res.status(404).json({ success: false, message: 'Class not found' });
+    }
+
+    const currentBookings = dbMemory.class_bookings.filter((b: any) => Number(b.class_id) === classId);
+    if (currentBookings.length >= Number(gymClass.max_capacity)) {
+      return res.status(400).json({ success: false, message: 'Class has reached maximum capacity.' });
+    }
+
+    const alreadyBooked = currentBookings.some((b: any) => b.member_id?.toUpperCase() === member_id.toUpperCase());
+    if (alreadyBooked) {
+      return res.status(400).json({ success: false, message: 'This member is already booked in this class.' });
+    }
+
+    const member = (dbMemory.members || []).find((m: any) => m.member_id?.toUpperCase() === member_id.toUpperCase());
+    const memberName = member ? member.full_name : member_id;
+
+    const newBookingId = dbMemory.class_bookings.reduce((max: number, b: any) => Math.max(max, Number(b.id || 0)), 0) + 1;
+    const newBooking = {
+      id: newBookingId,
+      class_id: classId,
+      member_id,
+      member_name: memberName,
+      booked_at: new Date().toISOString().replace('T', ' ').substring(0, 19),
+    };
+
+    dbMemory.class_bookings.push(newBooking);
+    gymClass.booked_count = dbMemory.class_bookings.filter((b: any) => Number(b.class_id) === classId).length;
+
+    saveDb();
+    res.json({ success: true, booking: newBooking, class: gymClass });
+  });
+
+  app.delete('/api/classes/:id/bookings/:memberId', (req, res) => {
+    const classId = Number(req.params.id);
+    const memberId = String(req.params.memberId).toUpperCase();
+
+    if (!Array.isArray(dbMemory.class_bookings)) dbMemory.class_bookings = [];
+    dbMemory.class_bookings = dbMemory.class_bookings.filter(
+      (b: any) => !(Number(b.class_id) === classId && b.member_id?.toUpperCase() === memberId)
+    );
+
+    const gymClass = (dbMemory.classes || []).find((c: any) => Number(c.id) === classId);
+    if (gymClass) {
+      gymClass.booked_count = dbMemory.class_bookings.filter((b: any) => Number(b.class_id) === classId).length;
+    }
+
+    saveDb();
+    res.json({ success: true });
   });
 
   // Local Network IP discovery endpoint (helps users easily find their laptop IP to open on phone)

@@ -24,19 +24,20 @@ export const BookSpotModal: React.FC<BookSpotModalProps> = ({
   // Filter available members or find first eligible member
   useEffect(() => {
     if (gymClass && members.length > 0) {
-      const bookedIds = new Set(gymClass.bookings?.map((b) => b.member_id) || []);
-      const firstAvailable = members.find((m) => !bookedIds.has(m.member_id));
-      setSelectedMemberId(firstAvailable ? firstAvailable.member_id : members[0]?.member_id || '');
+      const bookedIds = new Set((gymClass.bookings || []).map((b) => b.member_id?.trim().toUpperCase()));
+      const firstAvailable = members.find((m) => !bookedIds.has(m.member_id?.trim().toUpperCase()));
+      setSelectedMemberId(firstAvailable ? firstAvailable.member_id : '');
     }
     setError('');
   }, [gymClass, isOpen, members]);
 
   if (!isOpen || !gymClass) return null;
 
-  const bookedIds = new Set(gymClass.bookings?.map((b) => b.member_id) || []);
-  const spotsLeft = Math.max(0, gymClass.max_capacity - gymClass.booked_count);
-  const selectedMember = members.find((m) => m.member_id === selectedMemberId);
-  const isAlreadyBooked = selectedMemberId ? bookedIds.has(selectedMemberId) : false;
+  const bookedIds = new Set((gymClass.bookings || []).map((b) => b.member_id?.trim().toUpperCase()));
+  const currentCount = gymClass.bookings?.length ?? gymClass.booked_count;
+  const spotsLeft = Math.max(0, gymClass.max_capacity - currentCount);
+  const selectedMember = members.find((m) => m.member_id?.trim().toUpperCase() === selectedMemberId?.trim().toUpperCase());
+  const isAlreadyBooked = selectedMemberId ? bookedIds.has(selectedMemberId.trim().toUpperCase()) : false;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,7 +121,7 @@ export const BookSpotModal: React.FC<BookSpotModalProps> = ({
             >
               <option value="" disabled>-- Select member to add --</option>
               {members.map((m) => {
-                const booked = bookedIds.has(m.member_id);
+                const booked = bookedIds.has(m.member_id?.trim().toUpperCase());
                 return (
                   <option key={m.member_id} value={m.member_id} disabled={booked}>
                     {m.member_id} — {m.full_name} ({m.plan_type} • {m.status}) {booked ? '— [Already Booked]' : ''}

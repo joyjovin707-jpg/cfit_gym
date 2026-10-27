@@ -167,6 +167,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
       const today = new Date().toISOString().split('T')[0];
       await onSave({
         member_id: memberId,
+        member_name: selectedMember ? selectedMember.full_name : '',
         plan_description: planDesc,
         amount: parsedAmount,
         due_date: today,

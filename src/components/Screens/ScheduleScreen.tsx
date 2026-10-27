@@ -163,7 +163,7 @@ export const ScheduleScreen: React.FC<ScheduleScreenProps> = ({
       <BookSpotModal
         isOpen={!!classToBook}
         onClose={() => setClassToBook(null)}
-        gymClass={classToBook}
+        gymClass={classToBook ? (classes.find((c) => c.id === classToBook.id) || classToBook) : null}
         members={members}
         onConfirm={onBookMember}
       />
@@ -172,7 +172,7 @@ export const ScheduleScreen: React.FC<ScheduleScreenProps> = ({
       <RemoveSpotModal
         isOpen={!!classToRemoveSpot}
         onClose={() => setClassToRemoveSpot(null)}
-        gymClass={classToRemoveSpot}
+        gymClass={classToRemoveSpot ? (classes.find((c) => c.id === classToRemoveSpot.id) || classToRemoveSpot) : null}
         onConfirm={onRemoveMember}
       />
 
